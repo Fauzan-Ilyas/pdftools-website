@@ -1,0 +1,26 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\User;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+
+class UserTableSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        User::factory(5)->create();
+
+        User::first()->create([
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
+            'password' => 'password123',
+            'created_at' => now(),
+            'updated_at' => now(),
+                ]);
+    }
+}
