@@ -14,13 +14,13 @@ export default function Services() {
       title: "Merge PDFs",
       description: "Combine PDFs in the order you want the easiest PDF merger available.",
       imageUrl: "/img/merge-pdf.svg",
-      href: route("pdf_merge"),
+      href: route("merge_pdf"),
     },
     {
       title: "Split PDFs",
       description: "Separate one page or a whole set for easy conversion into independent PDFs files.",
       imageUrl: "/img/split-pdf.svg",
-      href: route("pdf_split"),
+      href: route("split_pdf"),
     },
     {
       title: "PDF to JPG",

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 type Theme = "light" | "dark" | "system";
 
@@ -33,7 +33,7 @@ export const useThemeStore = create<State>()(
     }),
     {
       name: "theme-storage",
-      getStorage: () => localStorage,
+      storage: createJSONStorage(() => localStorage),
     },
   ),
 );

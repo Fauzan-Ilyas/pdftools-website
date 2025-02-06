@@ -1,14 +1,16 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MergePdfController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index']);
 
-Route::get('/pdf-merge', [HomeController::class, 'pdf_merge'])->name('pdf_merge');
-Route::get('/pdf-split', [HomeController::class, 'pdf_split'])->name('pdf_split');
+Route::get('/merge-pdf', [MergePdfController::class, 'index'])->name('merge_pdf');
+Route::post('/merge-pdf', [MergePdfController::class, 'store'])->name('merge_pdf.store');
+Route::get('/split_pdf', [HomeController::class, 'split_pdf'])->name('split_pdf');
 Route::get('/pdf_to_jpg', [HomeController::class, 'pdf_to_jpg'])->name('pdf_to_jpg');
 Route::get('/jpg_to_pdf', [HomeController::class, 'jpg_to_pdf'])->name('jpg_to_pdf');
 Route::get('/rotate_pdf', [HomeController::class, 'rotate_pdf'])->name('rotate_pdf');
