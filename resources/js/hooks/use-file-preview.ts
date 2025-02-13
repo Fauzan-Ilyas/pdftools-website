@@ -4,6 +4,7 @@ import { isPdfFile } from "pdfjs-dist";
 import { useFileStore } from "@/store/use-file-store";
 import { isImageFile, isPowerpointFile, isWordFile } from "@/utils";
 import { Preview } from "@/types/upload";
+import { useShallow } from "zustand/react/shallow";
 
 type FilePreviewProps = {
   multiple?: boolean;
@@ -11,12 +12,12 @@ type FilePreviewProps = {
 };
 
 export const useFilePreview = ({ multiple, type }: FilePreviewProps) => {
-  const { files, setFiles, setOnDrag, setErrors } = useFileStore((state) => ({
+  const { files, setFiles, setOnDrag, setErrors } = useFileStore(useShallow((state) => ({
     files: state.files,
     setFiles: state.setFiles,
     setOnDrag: state.setOnDrag,
     setErrors: state.setErrors,
-  }));
+  })));
 
   const onSelectOrDropFiles = useCallback(
     (newFiles: FileList | null) => {

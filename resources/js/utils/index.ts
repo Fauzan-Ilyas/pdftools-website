@@ -36,3 +36,9 @@ export const formatFileSIze = (size: number): string => {
     return (size / (1024 * 1024 * 1024)).toFixed(2) + "GB";
   }
 };
+
+export const calculatePercentage = (total: number, processing: number) => {
+  if (total === 0) return 0;
+
+  return Number(((processing / total) * 100).toFixed(2));
+}

@@ -1,7 +1,7 @@
 import "./bootstrap";
 import "../css/app.css";
+import "./echo";
 
-import React from "react";
 import { createRoot, hydrateRoot } from "react-dom/client";
 import { createInertiaApp } from "@inertiajs/react";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
@@ -13,22 +13,15 @@ createInertiaApp({
   resolve: (name) =>
     resolvePageComponent(
       `./pages/${name}.tsx`, // Pastikan path ini sesuai dengan struktur proyek
-      import.meta.glob("./pages/**/*.tsx")
+      import.meta.glob("./pages/**/*.tsx"),
     ),
   setup({ el, App, props }) {
-    if (!el) return; // Pastikan `el` ada sebelum melakukan render
-
-    const app = (
-      <React.StrictMode>
-        <App {...props} />
-      </React.StrictMode>
-    );
-
     if (import.meta.env.DEV) {
-      createRoot(el).render(app);
-    } else {
-      hydrateRoot(el, app);
+      createRoot(el).render(<App {...props} />);
+      return; // Pastikan `el` ada sebelum melakukan render
     }
+
+    hydrateRoot(el, <App {...props} />);
   },
   progress: {
     color: "#4B5563",

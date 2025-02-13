@@ -3,12 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Providers\RouteServiceProvider;
+use App\Services\UploadServices;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class MergePdfController extends Controller
 {
+    public function __construct(private UploadServices $uploadService) 
+    {
+
+    }
+    
     public function index()
     {
         try {
@@ -22,14 +29,26 @@ class MergePdfController extends Controller
 
     public function store(Request $request)
     {
-        DB::beginTransaction();
         try {
-            
-            DB::commit();
+            $token = $request->token;
+            $files = $this->uploadService->handle(
+                token: $token,
+                files: $request->file('files'),
+                directory: 'download/merged',
+                service: RouteServiceProvider::MERGE_PDF
+            );
 
-            return to_route(RouteServiceProvider::MERGE_PDF, compact('token'));
+            dispatch(new \App\Jobs\MergePdf(
+                user: auth()->user(),
+                token: $token,
+                files: $files
+            ));
+
+            return to_route('merge_pdf.store', compact('token'));
         } catch (\Exception $e) {
-            DB::rollBack();
+            return back()->with([
+                'error_msg' => $e->getMessage()
+            ]);
         }
     }
 }

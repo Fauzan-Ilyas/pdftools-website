@@ -14,13 +14,15 @@ import PdfThumbnailGrid from "@/components/uploads/PdfThumbnailGrid";
 import DragFileOverlay from "@/components/uploads/DragFileOverlay";
 import { useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
+import Uploading from "@/components/uploads/Uploading";
+import Processing from "@/components/uploads/Processing";
 
 export default function MergePdf() {
   const { data, setData, post, processing } = useForm<Upload>({
     files: null,
     token: uuid(),
   });
-  const [resentlySuccessful, setResentlySuccessful] = useState(false);
+  const [recentlySuccessful, setResentlySuccessful] = useState(false);
 
   const { files, onDrag, setOnDrag } = useFileStore(
     useShallow((state) => ({
@@ -38,10 +40,6 @@ export default function MergePdf() {
   useEffect(() => {
     setData("files", files);
   }, [files]);
-
-  useEffect(() => {
-    console.log(processing);
-  }, [processing])
 
   const submit: React.FormEventHandler = (e) => {
     e.preventDefault();
@@ -84,6 +82,15 @@ export default function MergePdf() {
         />
 
         <DragFileOverlay onDrag={onDrag} />
+
+        {processing && <Uploading token={data.token} />}
+        {recentlySuccessful && (
+          <Processing
+            title="Merging PDFs..."
+            token={data.token}
+            setRecentlySuccessful={setResentlySuccessful}
+          />
+        )}
       </Wrapper>
 
       <Sidebar
