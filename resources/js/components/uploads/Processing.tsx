@@ -9,7 +9,7 @@ export default function Processing({
 }: {
   title: string;
   token: string;
-  setRecentlySuccessful: (isSuccess: boolean) => void;
+  setRecentlySuccessful: (value: boolean) => void;
 }) {
   const [hasPercentage, setHasPercentage] = useState(false);
   const [percentage, setPercentage] = useState(0);

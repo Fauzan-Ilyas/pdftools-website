@@ -16,12 +16,16 @@ import { useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import Uploading from "@/components/uploads/Uploading";
 import Processing from "@/components/uploads/Processing";
+import { useRef } from "react"; 
 
 export default function MergePdf() {
+  const fileInputRef = useRef<HTMLInputElement>(null); 
+
   const { data, setData, post, processing } = useForm<Upload>({
     files: null,
     token: uuid(),
   });
+
   const [recentlySuccessful, setResentlySuccessful] = useState(false);
 
   const { files, onDrag, setOnDrag } = useFileStore(
@@ -48,6 +52,7 @@ export default function MergePdf() {
       onSuccess: () => setResentlySuccessful(true),
     });
   };
+
   return (
     <AppLayout title="Merge PDF files">
       <Wrapper
@@ -58,22 +63,30 @@ export default function MergePdf() {
         onDrop={handleOnDrop}
       >
         {files.length === 0 && (
-          <Hero
-            title="Merge PDF files"
-            description="Combine PDFs in the order you want the easiest PDF merger available."
-            btn={{
-              title: "Select PDF files",
-              className: "btn btn-sky",
-            }}
-            dropLabel="or drop PDFs here"
-          />
-        )}
+           <Hero
+           title="Merge PDF files"
+           description="Combine PDFs in the order you want the easiest PDF merger available."
+           btn={{
+             title: "Select PDF files",
+             className: "btn btn-sky",
+             onClick: () => {
+               if (fileInputRef.current) {
+                 fileInputRef.current.click(); 
+               } else {
+                 console.error("File input ref belum siap!");
+               }
+             },
+           }}
+           dropLabel="or drop PDFs here"
+         />
+       )}
 
-        <FileInput
-          onSelectFile={onSelectFile}
-          multiple={true}
-          accept="application/pdf"
-        />
+       <FileInput
+         onSelectFile={onSelectFile}
+         multiple={true}
+         accept="application/pdf"
+         ref={fileInputRef} 
+       />
 
         <PdfThumbnailGrid
           files={files}

@@ -29,8 +29,6 @@ if (!function_exists('remove_file')) {
      */
     function remove_file($filePath)
     {
-        $filePath = str_replace('/storage', '', $filePath);
-        
         if ($filePath && Storage::exists($filePath)) {
             return Storage::delete($filePath);
         }

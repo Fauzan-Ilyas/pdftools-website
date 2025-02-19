@@ -6,6 +6,7 @@ type HeroProps = {
   btn: {
     title: string;
     className: string;
+    onClick?: () => void; 
   };
   dropLabel: string;
 };
@@ -22,15 +23,16 @@ export default function Hero({
       <p className="text-2xl text-foreground/80">{description}</p>
 
       <div className="!my-8">
-        <label
-          htmlFor="files"
+        <button
+          type="button"
+          onClick={btn.onClick} 
           className={clsx(
             "mx-auto block w-full max-w-xs cursor-pointer rounded-xl py-4 text-xl shadow",
             btn.className,
           )}
         >
           {btn.title}
-        </label>
+        </button>
 
         <p className="mt-2 text-secondary-foreground">{dropLabel}</p>
       </div>

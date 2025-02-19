@@ -15,12 +15,10 @@ class UserTableSeeder extends Seeder
     {
         User::factory(5)->create();
 
-        User::first()->create([
-            'name' => 'Admin',
+        User::first()->update([
             'email' => 'admin@gmail.com',
+            'name' => 'Admin',
             'password' => 'password123',
-            'created_at' => now(),
-            'updated_at' => now(),
                 ]);
     }
 }
